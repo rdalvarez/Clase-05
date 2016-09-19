@@ -1,24 +1,69 @@
 <?php 
 
-if (isset($_POST["subir"])) {
+	var_dump($_FILES);
+	echo "<br>********************************************<br>";
+	//var_dump($_FILES["archivo"]["name"]);
 
-var_dump($_FILES);
-echo "<br><br>";
-//var_dump($_FILES["archivo"]["name"]);
-echo "<br>";
+if (!isset($_POST['subir'])) 
+{
+echo "FALTAL ERROR:";
+}
+else
+{
+	if (!isset($_FILES['archivo'])) 
+	{
+		echo "No se cargo ninguna imagen.";
+	}
+	else
+	{
 
-$nombreDelArchivo = explode(".", $_FILES["archivo"]["name"]);//nombre + extencion
+		$nombreDelArchivo = explode(".", $_FILES['archivo']['name']);//nombre + extencion
+		$extencion = end($nombreDelArchivo);//solo la extencion
+		$destino = "Uploads/". $nombreDelArchivo[0] . "." . $extencion; //armo destino
+		$tamaño = $_FILES['archivo']['size'];
+		$Bandera = false;
 
-$extencion = end($nombreDelArchivo);//solo la extencion
+		switch ($extencion) 
+		{
+			case "doc":
+			case "docx":
+				if ($tamaño>61440) 
+				{
+					echo "Archivo demaciado grande (" . $extencion . " * " . $tamaño . ">" . "61440)". "<br>";
+					$Bandera = true;
+				}
+				break;
 
-$destino = "Subir/". $nombreDelArchivo[0] . "." . $extencion; //arcmo destino
+			case "jpg":
+			case "jpeg":
+			case "gif":
+				if ($tamaño>361200) 
+				{
+					echo "Archivo demaciado grande (." . $extencion . " * " . $tamaño . " > " . "361200)". "<br>";
+					$Bandera = true;
+				}
+				break;
 
+			default:
+				if ($tamaño>512000) 
+				{
+					echo "Archivo demaciado grande (" . $extencion . " * " . $tamaño . " > " . "512000)". "<br>";
+					$Bandera = true;
+				}				
+				break;
+		}
 
-if (move_uploaded_file($_FILES["archivo"]["tmp_name"],$destino)) {
-	echo "OK";
-} else {echo "Error Inesperado";}
-
-} else{echo "No se reicibio ninguna informacion.";}
-
-
+		if (!$Bandera)
+		{
+			if (move_uploaded_file($_FILES["archivo"]["tmp_name"],$destino))
+			{
+				echo "Subida de archivo Exitoso.";
+			}
+		} 
+		else
+		{
+			echo "Error Inesperado";
+		}	
+	}
+} 
  ?>
