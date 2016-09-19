@@ -8,9 +8,9 @@
 	<form method="POST" action="nexo.php" enctype="multipart/form-data">
 		<input type="text" name="ingreso" placeholder="Hola">
 		<br>
-		<input type="file" name="archivo" accept="image/*">
+		<input type="file" name="archivo">
 		<br>
-		<input type="submit" name="Subir" value="Subir" class="MiBotonUTNMenuInicio">
+		<input type="submit" name="subir" value="subir" class="MiBotonUTNMenuInicio">
 	</form>
 </div>
 </body>
