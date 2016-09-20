@@ -20,8 +20,8 @@ else
 		$nombreDelArchivo = explode(".", $_FILES['archivo']['name']);//nombre + extencion
 		$extencion = end($nombreDelArchivo);//solo la extencion
 		$destino = "Uploads/". $nombreDelArchivo[0] . "." . $extencion; //armo destino
-		$tamaño = $_FILES['archivo']['size'];
-		$Bandera = false;
+		$tamaño = $_FILES['archivo']['size'];//tamaño del archivo
+		$Bandera = false;//no hay errores
 
 		$extencionImagen = array("jpg", "jpeg", "gif");
 		$extencionDocumento = array("doc", "docx");
