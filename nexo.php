@@ -23,35 +23,28 @@ else
 		$tamaño = $_FILES['archivo']['size'];
 		$Bandera = false;
 
-		switch ($extencion) 
+		$extencionImagen = array("jpg", "jpeg", "gif");
+		$extencionDocumento = array("doc", "docx");
+
+		if ($tamaño>512000) 
 		{
-			case "doc":
-			case "docx":
-				if ($tamaño>61440) 
-				{
-					echo "Archivo demaciado grande (" . $extencion . " * " . $tamaño . ">" . "61440)". "<br>";
-					$Bandera = true;
-				}
-				break;
-
-			case "jpg":
-			case "jpeg":
-			case "gif":
-				if ($tamaño>361200) 
-				{
-					echo "Archivo demaciado grande (." . $extencion . " * " . $tamaño . " > " . "361200)". "<br>";
-					$Bandera = true;
-				}
-				break;
-
-			default:
-				if ($tamaño>512000) 
-				{
-					echo "Archivo demaciado grande (" . $extencion . " * " . $tamaño . " > " . "512000)". "<br>";
-					$Bandera = true;
-				}				
-				break;
+			echo "Archivo demaciado grande (." . $extencion . " * " . $tamaño . " > " . "512000)". "<br>";
+			$Bandera = true;
 		}
+		else
+			{
+				if ($tamaño>61440 && !in_array($extencion, $extencionImagen)) 
+				{
+					echo "Imagen demaciado grande (" . $extencion . " * " . $tamaño . ">" . "61440)". "<br>";
+					$Bandera = true;
+				}
+
+				if ($tamaño>361200 && !in_array($extencion, $extencionDocumento)) 
+				{
+					echo "Documento demaciado grande (." . $extencion . " * " . $tamaño . " > " . "361200)". "<br>";
+					$Bandera = true;
+				}
+			}
 
 		if (!$Bandera)
 		{
@@ -62,7 +55,7 @@ else
 		} 
 		else
 		{
-			echo "Error Inesperado";
+			echo "Subida de archivo Fallido";
 		}	
 	}
 } 
